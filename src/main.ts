@@ -8,6 +8,6 @@ async function bootstrap() {
     origin: 'https://bing-nft.vercel.app',
     credentials: true,
   })
-  await app.listen(process.env.PORT ?? 3001);
+  await app.listen(process.env.PORT ?? 4000);
 }
 bootstrap();
