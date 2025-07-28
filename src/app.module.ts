@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { WalletModule } from './wallet/wallet.module';
-import { ModelModule } from './model/model.module';
+// import { WalletModule } from './wallet/wallet.module';
+// import { ModelModule } from './model/model.module';
 // import { SequelizeModule } from '@nestjs/sequelize';
 import { AccountModule } from './account/account.module';
 import { ConfigModule } from '@nestjs/config';
@@ -25,11 +25,11 @@ import { UserNftEntity } from './contracts/entities/user-nft.entity';
       type: 'mysql',
       host: 'localhost',
       port: 3306,
-      username: 'master',
-      password: 'admin123',
+      username: 'myid',
+      password: '1994!BDs',
       database: 'B3project',
       entities: [SmartAccInfoEntity, UserNftEntity, NftUriEntity, SellNftEntity], // ⬅️ Register multiple entities
-      synchronize: false,
+      synchronize: true,
       // dropSchema: true 
     }),
     // SequelizeModule.forRoot({
@@ -45,7 +45,6 @@ import { UserNftEntity } from './contracts/entities/user-nft.entity';
     // }),
     TypeOrmModule.forFeature([SmartAccInfoEntity, UserNftEntity, NftUriEntity, SellNftEntity]),
     AccountModule,
-    TypeOrmModule,
     BundlerModule,
     ContractsModule,
   ],
@@ -53,3 +52,4 @@ import { UserNftEntity } from './contracts/entities/user-nft.entity';
   providers: [AppService],
 })
 export class AppModule { }
+  
