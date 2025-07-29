@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 var BundlerService_1;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BundlerService = void 0;
 const common_1 = require("@nestjs/common");
@@ -85,6 +86,6 @@ let BundlerService = BundlerService_1 = class BundlerService {
 exports.BundlerService = BundlerService;
 exports.BundlerService = BundlerService = BundlerService_1 = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [config_1.ConfigService])
+    __metadata("design:paramtypes", [typeof (_a = typeof config_1.ConfigService !== "undefined" && config_1.ConfigService) === "function" ? _a : Object])
 ], BundlerService);
 //# sourceMappingURL=bundler.service.js.map

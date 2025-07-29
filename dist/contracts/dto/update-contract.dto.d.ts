@@ -1,5 +1,4 @@
-import { CreateContractDto } from './create-contract.dto';
-declare const UpdateContractDto_base: import("@nestjs/mapped-types").MappedType<Partial<CreateContractDto>>;
+declare const UpdateContractDto_base: any;
 export declare class UpdateContractDto extends UpdateContractDto_base {
 }
 export {};

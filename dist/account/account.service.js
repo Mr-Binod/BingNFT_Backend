@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AccountService = void 0;
 const common_1 = require("@nestjs/common");
@@ -110,7 +111,6 @@ exports.AccountService = AccountService;
 exports.AccountService = AccountService = __decorate([
     (0, common_1.Injectable)(),
     __param(1, (0, typeorm_2.InjectRepository)(account_entity_1.SmartAccInfoEntity)),
-    __metadata("design:paramtypes", [config_1.ConfigService,
-        typeorm_1.Repository])
+    __metadata("design:paramtypes", [typeof (_a = typeof config_1.ConfigService !== "undefined" && config_1.ConfigService) === "function" ? _a : Object, typeof (_b = typeof typeorm_1.Repository !== "undefined" && typeorm_1.Repository) === "function" ? _b : Object])
 ], AccountService);
 //# sourceMappingURL=account.service.js.map

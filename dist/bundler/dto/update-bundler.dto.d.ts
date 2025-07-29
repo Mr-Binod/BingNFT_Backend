@@ -1,5 +1,4 @@
-import { CreateBundlerDto } from './create-bundler.dto';
-declare const UpdateBundlerDto_base: import("@nestjs/mapped-types").MappedType<Partial<CreateBundlerDto>>;
+declare const UpdateBundlerDto_base: any;
 export declare class UpdateBundlerDto extends UpdateBundlerDto_base {
 }
 export {};

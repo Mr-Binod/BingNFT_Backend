@@ -6,11 +6,11 @@ export declare class ModelController {
     createUser(body: {
         wallet: IWallet;
         Userbalance: number;
-    }): Promise<import("./table/user.model").User | undefined>;
+    }): Promise<any>;
     getUser(id: string): Promise<{
         data: any;
     }>;
-    getAllusers(): Promise<any[] | undefined>;
+    getAllusers(): Promise<any>;
     patchBalance(body: {
         id: number;
         balance: number;
