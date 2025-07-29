@@ -25,8 +25,8 @@ import { UserNftEntity } from './contracts/entities/user-nft.entity';
       type: 'mysql',
       host: 'localhost',
       port: 3306,
-      username: 'ZunoDB',
-      password: '1994!BDs',
+      username: `${process.env.DATABASE_NAME}`,
+      password: `${process.env.DATABASE_PASSWORD}`,
       database: 'B3project',
       entities: [SmartAccInfoEntity, UserNftEntity, NftUriEntity, SellNftEntity], // ⬅️ Register multiple entities
       synchronize: false,
