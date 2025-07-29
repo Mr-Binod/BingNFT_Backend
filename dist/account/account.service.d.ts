@@ -5,11 +5,11 @@ import { Repository } from 'typeorm';
 export declare class AccountService {
     private configService;
     private readonly smartAccInfoEntity;
-    constructor(configService: ConfigService, smartAccInfoEntity: Repository<SmartAccInfoEntity>);
     private readonly logger;
     private readonly provider;
     private readonly FactoryAcc;
     private readonly PayMasterAcc;
+    constructor(configService: ConfigService, smartAccInfoEntity: Repository<SmartAccInfoEntity>);
     createAcc(data: CreateAccountDto): Promise<{
         state: number;
         message: string;

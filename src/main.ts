@@ -4,7 +4,8 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: `bing-nft.vercel.app`,
+    origin: `https://zunobackend777.shop`,
+    // origin: '*',
     credentials: true,
   })
   await app.listen(process.env.PORT ?? 4000);

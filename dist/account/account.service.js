@@ -28,16 +28,19 @@ const typeorm_2 = require("@nestjs/typeorm");
 let AccountService = class AccountService {
     configService;
     smartAccInfoEntity;
-    constructor(configService, smartAccInfoEntity) {
-        this.configService = configService;
-        this.smartAccInfoEntity = smartAccInfoEntity;
-    }
     logger = new common_1.Logger('AccountService');
     provider = new ethers_1.ethers.JsonRpcProvider("https://sepolia.infura.io/v3/c36ac18d957a4f46aa6b893c058c4bbd");
     FactoryAcc = "0xC1C46659920c6302592b217c644FDc8dD1de2AD8";
     PayMasterAcc = "0x5C0b331B70b163b9452168EeEDf435f971C28Eda";
+    constructor(configService, smartAccInfoEntity) {
+        this.configService = configService;
+        this.smartAccInfoEntity = smartAccInfoEntity;
+    }
     async createAcc(data) {
-        const PaymasterPvtkey = '1bb48ef643ede40a87a2b32be5d9c11a0192490d94105dc6f81c0ae102dda212';
+        const PaymasterPvtkey = this.configService.get('PRIVATE_KEY');
+        if (!PaymasterPvtkey) {
+            throw new Error('PRIVATE_KEY is not set in environment variables');
+        }
         const user = data.id;
         const userpw = data.userpw;
         const privateKey = (0, PvtKeyGen_1.createPvtKey)(data);

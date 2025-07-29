@@ -13,89 +13,96 @@ import { InjectRepository } from '@nestjs/typeorm';
 @Injectable()
 export class AccountService {
 
+  // private PaymasterPvtkey: string;
+  private readonly logger = new Logger('AccountService');
+  private readonly provider = new ethers.JsonRpcProvider("https://sepolia.infura.io/v3/c36ac18d957a4f46aa6b893c058c4bbd")
+  private readonly FactoryAcc = "0xC1C46659920c6302592b217c644FDc8dD1de2AD8";
+  private readonly PayMasterAcc = "0x5C0b331B70b163b9452168EeEDf435f971C28Eda";
 
   constructor(
     private configService: ConfigService,
 
     @InjectRepository(SmartAccInfoEntity)
     private readonly smartAccInfoEntity: Repository<SmartAccInfoEntity>
-  ) { }
+  ) {
+    // this.PaymasterPvtkey = this.configService.get<string>('PRIVATE_KEY')
+  }
 
-  private readonly logger = new Logger('AccountService');
-  private readonly provider = new ethers.JsonRpcProvider("https://sepolia.infura.io/v3/c36ac18d957a4f46aa6b893c058c4bbd")
-  private readonly FactoryAcc = "0xC1C46659920c6302592b217c644FDc8dD1de2AD8";
-  private readonly PayMasterAcc = "0x5C0b331B70b163b9452168EeEDf435f971C28Eda";
+
 
   async createAcc(data: CreateAccountDto) {
-    const PaymasterPvtkey = '1bb48ef643ede40a87a2b32be5d9c11a0192490d94105dc6f81c0ae102dda212'
-    // const PaymasterPvtkey = `${this.configService.get<string>('PRIVATE_KEY')}`
-    const user = data.id;
-    const userpw = data.userpw;
-    const privateKey = createPvtKey(data)
-    const wallet = new ethers.Wallet(privateKey, this.provider)
-    const PaymasterWallet = new ethers.Wallet(PaymasterPvtkey, this.provider)
-    const FactoryContract = new ethers.Contract(this.FactoryAcc, FactoryAbi.abi, PaymasterWallet)
-    const PayMasterContract = new ethers.Contract(this.PayMasterAcc, PayMaster.abi, PaymasterWallet)
-    const owner = wallet.address;
-    try {
-      let checkWhitelist = false;
-      console.log('GG', PaymasterPvtkey)
-      const tx = await FactoryContract.createAcc(wallet);
-      const result = await tx.wait();
-      const smartAcc = await FactoryContract.getAccount(owner)
-      if (result) {
-        const tx = await PayMasterContract.whiteListAdd(smartAcc)
-        const result = await tx.wait()
-        const CheckWhitelist = await PayMasterContract.whiteList(smartAcc)
-        if (CheckWhitelist) {
-          checkWhitelist = true;
-        }
+      const PaymasterPvtkey = this.configService.get<string>('PRIVATE_KEY');
+      if (!PaymasterPvtkey) {
+        throw new Error('PRIVATE_KEY is not set in environment variables');
       }
+      // const PaymasterPvtkey = `${this.configService.get<string>('PRIVATE_KEY')}`
+      const user = data.id;
+      const userpw = data.userpw;
+      const privateKey = createPvtKey(data)
+      const wallet = new ethers.Wallet(privateKey, this.provider)
+      const PaymasterWallet = new ethers.Wallet(PaymasterPvtkey, this.provider)
+      const FactoryContract = new ethers.Contract(this.FactoryAcc, FactoryAbi.abi, PaymasterWallet)
+      const PayMasterContract = new ethers.Contract(this.PayMasterAcc, PayMaster.abi, PaymasterWallet)
+      const owner = wallet.address;
+      try {
+        let checkWhitelist = false;
+        console.log('GG', PaymasterPvtkey)
+        const tx = await FactoryContract.createAcc(wallet);
+        const result = await tx.wait();
+        const smartAcc = await FactoryContract.getAccount(owner)
+        if (result) {
+          const tx = await PayMasterContract.whiteListAdd(smartAcc)
+          const result = await tx.wait()
+          const CheckWhitelist = await PayMasterContract.whiteList(smartAcc)
+          if (CheckWhitelist) {
+            checkWhitelist = true;
+          }
+        }
 
-      const address = wallet.address
-      const privateKey = wallet.privateKey;
-      const data = this.smartAccInfoEntity.create({
-        user,
-        userpw,
-        UserAddress: address,
-        smartAcc,
-        privateKey,
-        checkWhitelist
-      })
-      await this.smartAccInfoEntity.save(data);
-      // console.log(`Wallet Address: ${wallet.address}`);
-      // console.log(`Private Key :  ${wallet.privateKey}`)
-      console.log(`Transaction hash : ${result.hash}`)
-      console.log(`Smart Account : ${smartAcc}`)
-      // console.log(`Smart Account : ${data}`)
-      return ({ state: 200, message: 'createAcc successful' })
-    } catch (error) {
-      // console.log(error)
-      return ({ state: 401, message: 'createAcc Failed' + error })
+        const address = wallet.address
+        const privateKey = wallet.privateKey;
+        const data = this.smartAccInfoEntity.create({
+          user,
+          userpw,
+          UserAddress: address,
+          smartAcc,
+          privateKey,
+          checkWhitelist
+        })
+        await this.smartAccInfoEntity.save(data);
+        // console.log(`Wallet Address: ${wallet.address}`);
+        // console.log(`Private Key :  ${wallet.privateKey}`)
+        console.log(`Transaction hash : ${result.hash}`)
+        console.log(`Smart Account : ${smartAcc}`)
+        // console.log(`Smart Account : ${data}`)
+        return ({ state: 200, message: 'createAcc successful' })
+      } catch (error) {
+        // console.log(error)
+        return ({ state: 401, message: 'createAcc Failed' + error })
+      }
     }
-  }
 
   async getFindAll() {
-    try {
-      const data = await this.smartAccInfoEntity.find()
-      if (data) return data
-      return data
-    } catch (error) {
-      return error
+      try {
+        const data = await this.smartAccInfoEntity.find()
+        if (data) return data
+        return data
+      } catch (error) {
+        return error
+      }
     }
-  }
 
   async getFindOne(user: string) {
-    try {
-      const data = await this.smartAccInfoEntity.findOne({ where: { user } })
-      console.log(data)
-      if (data) return ({ state: 201, message: data });
-      return ({ state: 402, message: data })
-    } catch (error) {
-      return ({ state: 402, message: error })
+      try {
+        const data = await this.smartAccInfoEntity.findOne({ where: { user } })
+        console.log(data)
+        if (data) return ({ state: 201, message: data });
+        return ({ state: 402, message: data })
+      } catch (error) {
+        return ({ state: 402, message: error })
+      }
     }
   }
-}
 
 
 // ssss 1bb48ef643ede40a87a2b32be5d9c11a0192490d94105dc6f81c0ae102dda212
