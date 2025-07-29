@@ -36,8 +36,7 @@ exports.AppModule = AppModule = __decorate([
                 password: `${process.env.DATABASE_PASSWORD}`,
                 database: 'b3project',
                 entities: [account_entity_1.SmartAccInfoEntity, user_nft_entity_1.UserNftEntity, nft_uri_entity_1.NftUriEntity, sell_nft_entity_1.SellNftEntity],
-                synchronize: true,
-                dropSchema: true
+                synchronize: false,
             }),
             typeorm_1.TypeOrmModule.forFeature([account_entity_1.SmartAccInfoEntity, user_nft_entity_1.UserNftEntity, nft_uri_entity_1.NftUriEntity, sell_nft_entity_1.SellNftEntity]),
             account_module_1.AccountModule,
