@@ -20,7 +20,7 @@ export declare class ContractsService {
     constructor(userNftEntity: Repository<UserNftEntity>, sellNftEntity: Repository<SellNftEntity>, nftUriEntity: Repository<NftUriEntity>);
     create(_data: CreateContractDto): Promise<{
         state: number;
-        message: any;
+        message: UserNftEntity;
     }>;
     ContractCreateSell(_data: SellNftDto): Promise<{
         state: number;
@@ -36,11 +36,14 @@ export declare class ContractsService {
     }>;
     createSell(_data: SellNftDto): Promise<{
         state: number;
-        message: any;
+        message: SellNftEntity;
     }>;
     getUserNfts(userid: string): Promise<{
         state: number;
-        message: any;
+        message: UserNftEntity[];
+    } | {
+        state: number;
+        message: string;
     }>;
     CreateNFT(_data: createNftUriDto): Promise<{
         state: number;
@@ -56,30 +59,43 @@ export declare class ContractsService {
     }>;
     getSellNft(): Promise<{
         state: number;
-        message: any;
+        message: SellNftEntity[];
+    } | {
+        state: number;
+        message: string;
     }>;
     findOneSellitem(userid: string, nftid: number): Promise<{
         state: number;
-        message: any;
+        message: SellNftEntity | null;
+    } | {
+        state: number;
+        message: string;
     }>;
     update(id: number, _data: UpdateContractDto): string;
     delete(data: BuyCancelNftDto): Promise<{
         state: number;
-        message: any;
+        message: import("typeorm").DeleteResult;
     }>;
-    PatchSubNft(data: SellNftDto): Promise<any>;
+    PatchSubNft(data: SellNftDto): Promise<import("typeorm").UpdateResult>;
     CancelSellNft(data: CreateContractDto): Promise<{
         state: number;
-        message: any;
+        message: UserNftEntity;
+    } | {
+        state: number;
+        message: import("typeorm").UpdateResult;
     }>;
     UpdateNft(data: BuynftDto): Promise<{
         state: number;
-        message: any;
+        message: import("typeorm").UpdateResult;
+        messate?: undefined;
+    } | {
+        state: number;
+        message: UserNftEntity;
         messate?: undefined;
     } | {
         state: number;
         messate: string;
         message?: undefined;
     }>;
-    CheckZero(): Promise<any>;
+    CheckZero(): Promise<import("typeorm").DeleteResult>;
 }

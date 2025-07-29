@@ -14,7 +14,6 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-var _a, _b, _c;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ContractsService = void 0;
 const common_1 = require("@nestjs/common");
@@ -242,6 +241,8 @@ exports.ContractsService = ContractsService = __decorate([
     __param(0, (0, typeorm_1.InjectRepository)(user_nft_entity_1.UserNftEntity)),
     __param(1, (0, typeorm_1.InjectRepository)(sell_nft_entity_1.SellNftEntity)),
     __param(2, (0, typeorm_1.InjectRepository)(nft_uri_entity_1.NftUriEntity)),
-    __metadata("design:paramtypes", [typeof (_a = typeof typeorm_2.Repository !== "undefined" && typeorm_2.Repository) === "function" ? _a : Object, typeof (_b = typeof typeorm_2.Repository !== "undefined" && typeorm_2.Repository) === "function" ? _b : Object, typeof (_c = typeof typeorm_2.Repository !== "undefined" && typeorm_2.Repository) === "function" ? _c : Object])
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
+        typeorm_2.Repository])
 ], ContractsService);
 //# sourceMappingURL=contracts.service.js.map

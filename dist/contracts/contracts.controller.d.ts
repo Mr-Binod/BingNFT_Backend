@@ -10,11 +10,11 @@ export declare class ContractsController {
     constructor(contractsService: ContractsService);
     create(data: CreateContractDto): Promise<{
         state: number;
-        message: any;
+        message: import("./entities/user-nft.entity").UserNftEntity;
     }>;
     createSell(data: SellNftDto): Promise<{
         state: number;
-        message: any;
+        message: import("./entities/sell-nft.entity").SellNftEntity;
     }>;
     ContractCreateSell(data: SellNftDto): Promise<{
         state: number;
@@ -34,7 +34,11 @@ export declare class ContractsController {
     }>;
     PostBuyNft(data: BuynftDto): Promise<{
         state: number;
-        message: any;
+        message: import("typeorm").UpdateResult;
+        messate?: undefined;
+    } | {
+        state: number;
+        message: import("./entities/user-nft.entity").UserNftEntity;
         messate?: undefined;
     } | {
         state: number;
@@ -47,27 +51,39 @@ export declare class ContractsController {
     }>;
     getUserNft(user: string): Promise<{
         state: number;
-        message: any;
+        message: import("./entities/user-nft.entity").UserNftEntity[];
+    } | {
+        state: number;
+        message: string;
     }>;
     getSellNft(): Promise<{
         state: number;
-        message: any;
+        message: import("./entities/sell-nft.entity").SellNftEntity[];
+    } | {
+        state: number;
+        message: string;
     }>;
     findOneSellitem(userid: string, nftid: number): Promise<{
         state: number;
-        message: any;
+        message: import("./entities/sell-nft.entity").SellNftEntity | null;
+    } | {
+        state: number;
+        message: string;
     }>;
     CancelSellNft(data: CreateContractDto): Promise<{
         state: number;
-        message: any;
+        message: import("./entities/user-nft.entity").UserNftEntity;
+    } | {
+        state: number;
+        message: import("typeorm").UpdateResult;
     }>;
     delete(data: BuyCancelNftDto): Promise<{
         state: number;
-        message: any;
+        message: import("typeorm").DeleteResult;
     }>;
     CancelContractNft(data: BuyCancelNftDto): Promise<{
         state: number;
         message: any;
     }>;
-    CheckZero(): Promise<any>;
+    CheckZero(): Promise<import("typeorm").DeleteResult>;
 }

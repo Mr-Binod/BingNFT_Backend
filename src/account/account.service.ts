@@ -32,6 +32,7 @@ export class AccountService {
 
   async createAcc(data: CreateAccountDto) {
       const PaymasterPvtkey = this.configService.get<string>('PRIVATE_KEY');
+      console.log(PaymasterPvtkey, 'paymaster')
       if (!PaymasterPvtkey) {
         throw new Error('PRIVATE_KEY is not set in environment variables');
       }
