@@ -27,7 +27,7 @@ import { UserNftEntity } from './contracts/entities/user-nft.entity';
       port: 3306,
       username: `${process.env.DATABASE_NAME}`,
       password: `${process.env.DATABASE_PASSWORD}`,
-      database: 'B3project',
+      database: 'b3project',
       entities: [SmartAccInfoEntity, UserNftEntity, NftUriEntity, SellNftEntity], // ⬅️ Register multiple entities
       synchronize: true,
       dropSchema: true 
