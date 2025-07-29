@@ -25,6 +25,7 @@ export class AccountController {
 
   @Get(':user')
   async getFindOne(@Param('user') user : string){
+    console.log(user)
     // console.log(await this.accountService.getFindOne(user))
     return await this.accountService.getFindOne(user)
   }

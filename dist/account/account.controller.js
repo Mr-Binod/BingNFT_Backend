@@ -31,6 +31,7 @@ let AccountController = class AccountController {
         return await this.accountService.getFindAll();
     }
     async getFindOne(user) {
+        console.log(user);
         return await this.accountService.getFindOne(user);
     }
 };
