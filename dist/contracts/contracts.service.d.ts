@@ -9,15 +9,15 @@ import { BuyCancelNftDto } from './dto/buy-cancel.dto';
 import { NftUriDto } from './dto/nft-uri.dto';
 import { createNftUriDto } from './dto/createnft.dto';
 import { BuynftDto } from './dto/Buynft.dto';
+import { ConfigService } from '@nestjs/config';
 export declare class ContractsService {
+    private configService;
     private readonly userNftEntity;
     private readonly sellNftEntity;
     private readonly nftUriEntity;
-    private readonly provider;
-    private readonly PayMasterprivateKey;
-    private readonly paymasterWallet;
-    private readonly PayMasterNftContract;
-    constructor(userNftEntity: Repository<UserNftEntity>, sellNftEntity: Repository<SellNftEntity>, nftUriEntity: Repository<NftUriEntity>);
+    private paymasterWallet;
+    private PayMasterNftContract;
+    constructor(configService: ConfigService, userNftEntity: Repository<UserNftEntity>, sellNftEntity: Repository<SellNftEntity>, nftUriEntity: Repository<NftUriEntity>);
     create(_data: CreateContractDto): Promise<{
         state: number;
         message: UserNftEntity;

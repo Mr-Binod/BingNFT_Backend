@@ -30,8 +30,8 @@ let BundlerService = BundlerService_1 = class BundlerService {
         this.configService = configService;
     }
     async addMempool(userop) {
-        this.privateKey = `1bb48ef643ede40a87a2b32be5d9c11a0192490d94105dc6f81c0ae102dda212`;
-        this.paymasterWallet = new ethers_1.ethers.Wallet(this.privateKey, this.provider);
+        const privateKey = this.configService.get('PRIVATE_KEY');
+        this.paymasterWallet = new ethers_1.ethers.Wallet(privateKey, this.provider);
         const entryPointCA = `${this.configService.get('ENTRY_POINT')}`;
         this.PayMasterEntryPoint = new ethers_1.ethers.Contract(entryPointCA, EntryPoint_json_1.default.abi, this.paymasterWallet);
         this.mempool.push(userop);

@@ -19,12 +19,15 @@ export class BundlerService {
   private privateKey: string;
   constructor(
     private configService: ConfigService
-  ) { }
+  ) { 
+    
+   }
 
 
   async addMempool(userop: CreateBundlerDto) {
-    this.privateKey = `1bb48ef643ede40a87a2b32be5d9c11a0192490d94105dc6f81c0ae102dda212`
-    this.paymasterWallet = new ethers.Wallet(this.privateKey, this.provider)
+
+    const privateKey : string = this.configService.get<string>('PRIVATE_KEY') as string ;
+    this.paymasterWallet = new ethers.Wallet(privateKey, this.provider)
 
     const entryPointCA = `${this.configService.get<string>('ENTRY_POINT')}`
     this.PayMasterEntryPoint = new ethers.Contract(entryPointCA, entryPointABI.abi, this.paymasterWallet)
@@ -79,7 +82,5 @@ export class BundlerService {
       this.logger.error('Error processing transactions:', error);
     }
   }
-
-
 
 }

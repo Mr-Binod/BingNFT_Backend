@@ -24,18 +24,24 @@ const user_nft_entity_1 = require("./entities/user-nft.entity");
 const sell_nft_entity_1 = require("./entities/sell-nft.entity");
 const ethers_1 = require("ethers");
 const BingNFT_json_1 = __importDefault(require("../abi/BingNFT.json"));
+const config_1 = require("@nestjs/config");
 let ContractsService = class ContractsService {
+    configService;
     userNftEntity;
     sellNftEntity;
     nftUriEntity;
-    provider = new ethers_1.ethers.JsonRpcProvider("https://sepolia.infura.io/v3/c36ac18d957a4f46aa6b893c058c4bbd");
-    PayMasterprivateKey = `1bb48ef643ede40a87a2b32be5d9c11a0192490d94105dc6f81c0ae102dda212`;
-    paymasterWallet = new ethers_1.ethers.Wallet(this.PayMasterprivateKey, this.provider);
-    PayMasterNftContract = new ethers_1.ethers.Contract("0xdCfaE843d7A3ebFF5CF1BA68F6aE376d05a41193", BingNFT_json_1.default.abi, this.paymasterWallet);
-    constructor(userNftEntity, sellNftEntity, nftUriEntity) {
+    paymasterWallet;
+    PayMasterNftContract;
+    constructor(configService, userNftEntity, sellNftEntity, nftUriEntity) {
+        this.configService = configService;
         this.userNftEntity = userNftEntity;
         this.sellNftEntity = sellNftEntity;
         this.nftUriEntity = nftUriEntity;
+        const provider = new ethers_1.ethers.JsonRpcProvider("https://sepolia.infura.io/v3/c36ac18d957a4f46aa6b893c058c4bbd");
+        const PayMasterprivateKey = this.configService.get('PRIVATE_KEY');
+        console.log(PayMasterprivateKey, 'll');
+        this.paymasterWallet = new ethers_1.ethers.Wallet(PayMasterprivateKey, provider);
+        this.PayMasterNftContract = new ethers_1.ethers.Contract("0xb8A197035894A4d4d8a98f7F183eC291D83b2914", BingNFT_json_1.default.abi, this.paymasterWallet);
     }
     async create(_data) {
         const { nftid, nftidToken, nftUridata } = _data;
@@ -238,10 +244,11 @@ let ContractsService = class ContractsService {
 exports.ContractsService = ContractsService;
 exports.ContractsService = ContractsService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(user_nft_entity_1.UserNftEntity)),
-    __param(1, (0, typeorm_1.InjectRepository)(sell_nft_entity_1.SellNftEntity)),
-    __param(2, (0, typeorm_1.InjectRepository)(nft_uri_entity_1.NftUriEntity)),
-    __metadata("design:paramtypes", [typeorm_2.Repository,
+    __param(1, (0, typeorm_1.InjectRepository)(user_nft_entity_1.UserNftEntity)),
+    __param(2, (0, typeorm_1.InjectRepository)(sell_nft_entity_1.SellNftEntity)),
+    __param(3, (0, typeorm_1.InjectRepository)(nft_uri_entity_1.NftUriEntity)),
+    __metadata("design:paramtypes", [config_1.ConfigService,
+        typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository])
 ], ContractsService);

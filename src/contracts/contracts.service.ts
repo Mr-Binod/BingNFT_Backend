@@ -14,18 +14,18 @@ import { CreateAccountDto } from 'src/account/dto/create-account.dto';
 import { NftUriDto } from './dto/nft-uri.dto';
 import { createNftUriDto } from './dto/createnft.dto';
 import { BuynftDto } from './dto/Buynft.dto';
+import { ConfigService } from '@nestjs/config';
 
 
 @Injectable()
 export class ContractsService {
 
-  private readonly provider = new ethers.JsonRpcProvider("https://sepolia.infura.io/v3/c36ac18d957a4f46aa6b893c058c4bbd")
-  private readonly PayMasterprivateKey = `1bb48ef643ede40a87a2b32be5d9c11a0192490d94105dc6f81c0ae102dda212`
-  private readonly paymasterWallet = new ethers.Wallet(this.PayMasterprivateKey, this.provider)
-  private readonly PayMasterNftContract = new ethers.Contract("0xdCfaE843d7A3ebFF5CF1BA68F6aE376d05a41193", NftABI.abi, this.paymasterWallet)
-  // private paymasterWallet: ethers.Wallet;
+  private paymasterWallet : ethers.Wallet;
+  private PayMasterNftContract : ethers.Contract;
 
   constructor(
+    private configService: ConfigService,
+
     @InjectRepository(UserNftEntity)
     private readonly userNftEntity: Repository<UserNftEntity>,
 
@@ -34,7 +34,17 @@ export class ContractsService {
 
     @InjectRepository(NftUriEntity)
     private readonly nftUriEntity: Repository<NftUriEntity>,
-  ) { }
+  ) { 
+
+    const provider = new ethers.JsonRpcProvider("https://sepolia.infura.io/v3/c36ac18d957a4f46aa6b893c058c4bbd")
+    
+    const PayMasterprivateKey : string = this.configService.get<string>('PRIVATE_KEY') as string ;
+    console.log(PayMasterprivateKey,'ll')
+    this.paymasterWallet = new ethers.Wallet(PayMasterprivateKey , provider)
+    this.PayMasterNftContract = new ethers.Contract("0xb8A197035894A4d4d8a98f7F183eC291D83b2914", NftABI.abi, this.paymasterWallet)
+  }
+  // private paymasterWallet: ethers.Wallet;
+
   async create(_data: CreateContractDto) {
     const { nftid, nftidToken, nftUridata } = _data;
     try {
