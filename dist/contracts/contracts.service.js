@@ -37,7 +37,7 @@ let ContractsService = class ContractsService {
         this.userNftEntity = userNftEntity;
         this.sellNftEntity = sellNftEntity;
         this.nftUriEntity = nftUriEntity;
-        const provider = new ethers_1.ethers.JsonRpcProvider("https://sepolia.infura.io/v3/c36ac18d957a4f46aa6b893c058c4bbd");
+        const provider = new ethers_1.ethers.JsonRpcProvider("https://sepolia.infura.io/v3/e7468d2d517b4aa28ba51a6e589558e2");
         const PayMasterprivateKey = this.configService.get('PRIVATE_KEY');
         console.log(PayMasterprivateKey, 'll');
         this.paymasterWallet = new ethers_1.ethers.Wallet(PayMasterprivateKey, provider);

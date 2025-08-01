@@ -36,7 +36,7 @@ export class ContractsService {
     private readonly nftUriEntity: Repository<NftUriEntity>,
   ) { 
 
-    const provider = new ethers.JsonRpcProvider("https://sepolia.infura.io/v3/c36ac18d957a4f46aa6b893c058c4bbd")
+    const provider = new ethers.JsonRpcProvider("https://sepolia.infura.io/v3/e7468d2d517b4aa28ba51a6e589558e2")
     
     const PayMasterprivateKey : string = this.configService.get<string>('PRIVATE_KEY') as string ;
     console.log(PayMasterprivateKey,'ll')
