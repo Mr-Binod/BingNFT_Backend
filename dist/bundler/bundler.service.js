@@ -21,7 +21,7 @@ const EntryPoint_json_1 = __importDefault(require("../abi/EntryPoint.json"));
 let BundlerService = BundlerService_1 = class BundlerService {
     configService;
     logger = new common_1.Logger(BundlerService_1.name);
-    provider = new ethers_1.ethers.JsonRpcProvider("https://sepolia.infura.io/v3/c36ac18d957a4f46aa6b893c058c4bbd");
+    provider = new ethers_1.ethers.JsonRpcProvider("https://sepolia.infura.io/v3/e7468d2d517b4aa28ba51a6e589558e2");
     mempool = [];
     paymasterWallet;
     PayMasterEntryPoint;

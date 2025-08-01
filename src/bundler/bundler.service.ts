@@ -12,7 +12,7 @@ export class BundlerService {
 
   private readonly logger = new Logger(BundlerService.name);
 
-  private readonly provider = new ethers.JsonRpcProvider("https://sepolia.infura.io/v3/c36ac18d957a4f46aa6b893c058c4bbd")
+  private readonly provider = new ethers.JsonRpcProvider("https://sepolia.infura.io/v3/e7468d2d517b4aa28ba51a6e589558e2")
   private mempool: CreateBundlerDto[] = [];
   private paymasterWallet: ethers.Wallet;
   private PayMasterEntryPoint: ethers.Contract;
