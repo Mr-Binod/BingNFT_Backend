@@ -36,12 +36,12 @@ export class ContractsService {
     private readonly nftUriEntity: Repository<NftUriEntity>,
   ) { 
 
-    const provider = new ethers.JsonRpcProvider("https://sepolia.infura.io/v3/e7468d2d517b4aa28ba51a6e589558e2")
+    const provider = new ethers.JsonRpcProvider("https://sepolia.infura.io/v3/9ec09659de844985bf4990794e85cf98")
     
     const PayMasterprivateKey : string = this.configService.get<string>('PRIVATE_KEY') as string ;
     console.log(PayMasterprivateKey,'ll')
     this.paymasterWallet = new ethers.Wallet(PayMasterprivateKey , provider)
-    this.PayMasterNftContract = new ethers.Contract("0xb8A197035894A4d4d8a98f7F183eC291D83b2914", NftABI.abi, this.paymasterWallet)
+    this.PayMasterNftContract = new ethers.Contract("0x88459A08752DBECC7938Eef148A873637Db39b5b", NftABI.abi, this.paymasterWallet)
   }
   // private paymasterWallet: ethers.Wallet;
 
@@ -51,6 +51,7 @@ export class ContractsService {
       const result = this.nftUriEntity.create({ nftid, TotalNftidTokenAmt: nftidToken, nftUridata })
       await this.nftUriEntity.save(result)
       const data = this.userNftEntity.create(_data)
+      console.log(data)
       return { state: 200, message: await this.userNftEntity.save(data) }
     } catch (error) {
       throw new Error('failed to create contracts')

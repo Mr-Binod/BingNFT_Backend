@@ -10,10 +10,10 @@ export declare class AccountService {
     private readonly FactoryAcc;
     private readonly PayMasterAcc;
     constructor(configService: ConfigService, smartAccInfoEntity: Repository<SmartAccInfoEntity>);
-    createAcc(data: CreateAccountDto): Promise<{
+    createAcc(_data: CreateAccountDto): Promise<{
         state: number;
         message: string;
-    }>;
+    } | undefined>;
     getFindAll(): Promise<any>;
     getFindOne(user: string): Promise<{
         state: number;
