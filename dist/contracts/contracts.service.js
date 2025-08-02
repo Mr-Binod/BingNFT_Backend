@@ -41,7 +41,7 @@ let ContractsService = class ContractsService {
         const PayMasterprivateKey = this.configService.get('PRIVATE_KEY');
         console.log(PayMasterprivateKey, 'll');
         this.paymasterWallet = new ethers_1.ethers.Wallet(PayMasterprivateKey, provider);
-        this.PayMasterNftContract = new ethers_1.ethers.Contract("0x88459A08752DBECC7938Eef148A873637Db39b5b", BingNFT_json_1.default.abi, this.paymasterWallet);
+        this.PayMasterNftContract = new ethers_1.ethers.Contract("0x16D1D873372D0Ec82b60E649f072963Dc9EC5F4D", BingNFT_json_1.default.abi, this.paymasterWallet);
     }
     async create(_data) {
         const { nftid, nftidToken, nftUridata } = _data;

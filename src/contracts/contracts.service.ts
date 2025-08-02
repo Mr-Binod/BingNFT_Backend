@@ -41,7 +41,7 @@ export class ContractsService {
     const PayMasterprivateKey : string = this.configService.get<string>('PRIVATE_KEY') as string ;
     console.log(PayMasterprivateKey,'ll')
     this.paymasterWallet = new ethers.Wallet(PayMasterprivateKey , provider)
-    this.PayMasterNftContract = new ethers.Contract("0x88459A08752DBECC7938Eef148A873637Db39b5b", NftABI.abi, this.paymasterWallet)
+    this.PayMasterNftContract = new ethers.Contract("0x16D1D873372D0Ec82b60E649f072963Dc9EC5F4D", NftABI.abi, this.paymasterWallet)
   }
   // private paymasterWallet: ethers.Wallet;
 

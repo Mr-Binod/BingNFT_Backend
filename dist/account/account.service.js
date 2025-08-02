@@ -30,8 +30,8 @@ let AccountService = class AccountService {
     smartAccInfoEntity;
     logger = new common_1.Logger('AccountService');
     provider = new ethers_1.ethers.JsonRpcProvider("https://sepolia.infura.io/v3/e7468d2d517b4aa28ba51a6e589558e2");
-    FactoryAcc = "0x5FB0dD09111636f5847a70e915fC118c3a796E95";
-    PayMasterAcc = "0x6DeB751aB5842536Fa37774cF3c9AC361A939873";
+    FactoryAcc = "0x7506DbdD27ea2b5AD3fa3d923C76144C0335B577";
+    PayMasterAcc = "0xc27232Ad54809c3f6dF13ac091E142CdA0C959c2";
     constructor(configService, smartAccInfoEntity) {
         this.configService = configService;
         this.smartAccInfoEntity = smartAccInfoEntity;
