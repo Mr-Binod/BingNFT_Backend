@@ -37,11 +37,11 @@ let ContractsService = class ContractsService {
         this.userNftEntity = userNftEntity;
         this.sellNftEntity = sellNftEntity;
         this.nftUriEntity = nftUriEntity;
-        const provider = new ethers_1.ethers.JsonRpcProvider("https://sepolia.infura.io/v3/e7468d2d517b4aa28ba51a6e589558e2");
+        const provider = new ethers_1.ethers.JsonRpcProvider("https://sepolia.infura.io/v3/9ec09659de844985bf4990794e85cf98");
         const PayMasterprivateKey = this.configService.get('PRIVATE_KEY');
         console.log(PayMasterprivateKey, 'll');
         this.paymasterWallet = new ethers_1.ethers.Wallet(PayMasterprivateKey, provider);
-        this.PayMasterNftContract = new ethers_1.ethers.Contract("0xb8A197035894A4d4d8a98f7F183eC291D83b2914", BingNFT_json_1.default.abi, this.paymasterWallet);
+        this.PayMasterNftContract = new ethers_1.ethers.Contract("0x19198cA000fCaB8A4d3407e6a5f89dCEC888f032", BingNFT_json_1.default.abi, this.paymasterWallet);
     }
     async create(_data) {
         const { nftid, nftidToken, nftUridata } = _data;
@@ -49,6 +49,7 @@ let ContractsService = class ContractsService {
             const result = this.nftUriEntity.create({ nftid, TotalNftidTokenAmt: nftidToken, nftUridata });
             await this.nftUriEntity.save(result);
             const data = this.userNftEntity.create(_data);
+            console.log(data);
             return { state: 200, message: await this.userNftEntity.save(data) };
         }
         catch (error) {

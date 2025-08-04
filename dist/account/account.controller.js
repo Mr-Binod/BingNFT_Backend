@@ -23,8 +23,8 @@ let AccountController = class AccountController {
     }
     async createAcc(data) {
         console.log('connected');
-        const result = await this.accountService.createAcc(data);
-        return result;
+        this.accountService.createAcc(data);
+        return { state: 200, message: 'createAcc successful' };
     }
     async getFindAll() {
         console.log('find');

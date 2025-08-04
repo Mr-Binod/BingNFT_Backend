@@ -30,54 +30,53 @@ let AccountService = class AccountService {
     smartAccInfoEntity;
     logger = new common_1.Logger('AccountService');
     provider = new ethers_1.ethers.JsonRpcProvider("https://sepolia.infura.io/v3/e7468d2d517b4aa28ba51a6e589558e2");
-    FactoryAcc = "0x5FB0dD09111636f5847a70e915fC118c3a796E95";
-    PayMasterAcc = "0xbA56212Ab76Fe56F99351103B17432C1D7EEd608";
+    FactoryAcc = "0x2d1bC1552548e0C236F2c856E02B77d1909AdA3d";
+    PayMasterAcc = "0x7C949B040022F353293308De855bae8719800736";
     constructor(configService, smartAccInfoEntity) {
         this.configService = configService;
         this.smartAccInfoEntity = smartAccInfoEntity;
     }
-    async createAcc(data) {
+    async createAcc(_data) {
         const PaymasterPvtkey = this.configService.get('PRIVATE_KEY');
         console.log(PaymasterPvtkey, 'paymaster');
         if (!PaymasterPvtkey) {
             throw new Error('PRIVATE_KEY is not set in environment variables');
         }
-        const user = data.id;
-        const userpw = data.userpw;
-        const privateKey = (0, PvtKeyGen_1.createPvtKey)(data);
+        const user = _data.id;
+        const userpw = _data.userpw;
+        const privateKey = (0, PvtKeyGen_1.createPvtKey)(_data);
         const wallet = new ethers_1.ethers.Wallet(privateKey, this.provider);
         const PaymasterWallet = new ethers_1.ethers.Wallet(PaymasterPvtkey, this.provider);
         const FactoryContract = new ethers_1.ethers.Contract(this.FactoryAcc, SmartFactory_json_1.default.abi, PaymasterWallet);
         const PayMasterContract = new ethers_1.ethers.Contract(this.PayMasterAcc, PayMaster_json_1.default.abi, PaymasterWallet);
         const owner = wallet.address;
+        const data = this.smartAccInfoEntity.create({
+            user,
+            userpw,
+            UserAddress: owner,
+            smartAcc: '0x',
+            privateKey,
+            checkWhitelist: false
+        });
+        await this.smartAccInfoEntity.save(data);
+        console.log('GG', data);
         try {
             let checkWhitelist = false;
-            console.log('GG', PaymasterPvtkey);
             const tx = await FactoryContract.createAcc(wallet);
             const result = await tx.wait();
             const smartAcc = await FactoryContract.getAccount(owner);
             if (result) {
                 const tx = await PayMasterContract.whiteListAdd(smartAcc);
+                console.log('GG1', tx);
                 const result = await tx.wait();
                 const CheckWhitelist = await PayMasterContract.whiteList(smartAcc);
                 if (CheckWhitelist) {
                     checkWhitelist = true;
                 }
             }
-            const address = wallet.address;
-            const privateKey = wallet.privateKey;
-            const data = this.smartAccInfoEntity.create({
-                user,
-                userpw,
-                UserAddress: address,
-                smartAcc,
-                privateKey,
-                checkWhitelist
-            });
-            await this.smartAccInfoEntity.save(data);
+            const updatedata = await this.smartAccInfoEntity.update({ user }, { smartAcc, checkWhitelist });
+            console.log(updatedata);
             console.log(`Transaction hash : ${result.hash}`);
-            console.log(`Smart Account : ${smartAcc}`);
-            return ({ state: 200, message: 'createAcc successful' });
         }
         catch (error) {
             return ({ state: 401, message: 'createAcc Failed' + error });

@@ -12,8 +12,8 @@ export class AccountController {
   @Post()
   async createAcc(@Body() data: CreateAccountDto) {
     console.log('connected')
-    const result = await this.accountService.createAcc(data);
-    return result
+    this.accountService.createAcc(data);
+    return {state : 200, message : 'createAcc successful'}
   }
 
   @Get()
